@@ -1,0 +1,149 @@
+<<!-- orderItems.hbs -->
+<h1 class = "center">The Potion Pharmaceutical 
+    <p class = "p"><a href="/">Index</a> | <a href="customers">Customers</a> | <a href="orders">Orders</a> 
+        | <a href="credentials">Credentials</a> | <a href="products">Products</a> | <a href="orderItems"> Order Items</a></p>
+</h1>
+<h1><strong>Order Items</strong></h1>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/styler.css">
+
+
+{{!-- Create a table --}}
+<table class="table" id="orderItems-table">>
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the order number, product number, quantity, selling price and is_shipped, in order --}}
+        {{#each data}}
+        <tr data-value={{this.id}}>>
+            <td>{{this.order_number}}</td>
+            <td>{{this.product_number}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.selling_price}}</td>
+            <td>{{this.is_shipped}}</td>
+            <td><button class="btnWarning" onclick="deleteOrderItem({{this.order_number}}, {{this.product_number}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table  --}}
+
+<h2>Add Order Items</h2>
+<p>To add a new order item, please enter their information below and click 'Submit'!</p>
+<fieldset class = "fields">
+<form id="add-orderItems-form-ajax">
+    <label class="labelAlign" for="input-order-number">Order Number: </label>
+    <select name="input-order-number" id="order-number">
+        <option value="">Order Number</option>
+        {{#each searchOrderItems}}
+        <option value="{{this.order_number}}">{{this.order_number}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="input-product-number">Product Number: </label>
+    <select name="input-product-number" id="product-number">
+        <option value="">Product Number</option>
+        {{#each productItems}}
+        <option value="{{this.product_number}}">{{this.product_number}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="input-quantity">Quantity: </label>
+    <input type="number" step="1" name="input-quantity" id="input-quantity">
+    </br>
+    
+    <label class="labelAlign" for="input-selling-price">Selling Price: </label>
+    <input type="number" step="any" name="input-selling-price" id="input-selling-price">
+    </br>
+
+    <p>Has the order been shipped?</p>
+    <input type="radio" name="input-is-shipped" id="input-is-shipped" value="1">
+    <label class="labelAlign" for="yes">Yes </label></br>
+    <input type="radio" name="input-is-shipped" id="input-is-shipped" value="0" checked="checked">
+    <label class="labelAlign" for="no">No </label></br>
+    
+    
+
+
+    <input class= "btn2" type="submit">
+</form>
+</fieldset>
+
+{{!-- Search Table --}}
+<h2>Search Order Items</h2>
+<p>Search Order Items using the field below.</p>
+<fieldset class ="fields">
+<form id="search-orderItems-html" method='GET' action='/orderItems'>
+    <label class="labelAlign" for="input-order-number">Search by Order #: </label>
+    <select name= "order_number" id="mySelectedOrder">
+        <option value="">Select an Order #</option>
+        {{#each searchOrderItems}}
+        <option value="{{this.order_number}}">{{this.order_number}}</option>
+        {{/each}}
+    </select>
+    
+    <input class ="btn2" type="submit">
+    <a href='/orderItems'><button>Reset</button></a>
+</form>
+</fieldset>
+
+{{!-- Update Table --}}
+<h2>Updating an Order Item</h2>
+<p>To update a specific customer's select their name from the drop-down menu on the left and their desired name from the label on the right</p>
+<fieldset class = "fields">
+<form id="update_order_item">
+    <label class="labelAlign" for="order_number">Order Number: </label>
+    <select name="order_number" id="order_number" onChange='fillInUpdateForm()'>
+        <option value="">Order Number</option>
+        {{#each data}}
+        <option value="{{this.order_number}}">{{this.order_number}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="product_number">Product Number: </label>
+    <select name="product_number" id="product_number" onChange='fillInUpdateForm()'>
+        <option value="">Product Number</option>
+        {{#each data}}
+        <option value="{{this.product_number}}">{{this.product_number}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="quantity">Quantity: </label>
+    <input type="number" step="1" name="quantity" id="quantity">
+    </br>
+    
+    <label class="labelAlign" for="selling_price">Selling Price: </label>
+    <input type="number" step="any" name="selling_price" id="selling_price">
+    </br>
+
+    <p>Has the order been shipped?</p>
+    <input type="radio" name="shipped" id="is_shipped" value="1">
+    <label class="labelAlign" for="is_shipped">Yes </label></br>
+    <input type="radio" name="shipped" id="not_shipped" value="0" checked="checked">
+    <label class="labelAlign" for="not_shipped">No </label></br>
+
+    <input class= "btn2" type="submit">
+</form>
+</fieldset>
+
+<script src="./js/order_item.js"></script>

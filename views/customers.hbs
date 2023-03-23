@@ -1,0 +1,116 @@
+<!-- customers.hbs -->
+<h1 class = "center">The Potion Pharmaceutical 
+    <p class = "p"><a href="/">Index</a> | <a href="customers">Customers</a> | <a href="orders">Orders</a> 
+        | <a href="credentials">Credentials</a> | <a href="products">Products</a> | <a href="orderItems"> Order Items</a></p>
+</h1>
+<h1><strong>Customers</strong></h1>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/styler.css">
+
+{{!-- Create a table --}}
+<table class="table" id="customer-table">>
+
+    {{!-- Header section --}}
+    <thead>
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the customer ID, first name, last name, email and address, in order --}}
+        {{#each data}}
+        <tr data-value={{this.id}}>>
+            <td>{{this.customer_ID}}</td>
+            <td>{{this.customer_first_name}}</td>
+            <td>{{this.customer_last_name}}</td>
+            <td>{{this.customer_email}}</td>
+            <td>{{this.customer_address}}</td>
+            <td><button class="btnWarning" onclick="deleteCustomer({{this.customer_ID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<!-- /views/index.hbs -->
+{{!-- Form to add a record to the table --}}
+<h2>Adding Data using an HTML form</h2>
+<p>To add a new customer, please enter their information below and click `Submit`!</p>
+    <fieldset class = "fields">
+        <form id="add-person-form" method="POST" action="/add-person">
+            <label class="labelAlign" for="input-customer-first-name">First Name: </label>
+            <input type="text" name="input-customer-first-name" id="input-customer-first-name">
+            </br>
+            
+            <label class="labelAlign" for="input-customer-last-name">Last Name: </label>
+            <input type="text" name="input-customer-last-name" id="input-customer-last-name">
+            </br>
+
+            <label class="labelAlign" for="input-customer-email">Email: </label>
+            <input type="text" name="input-customer-email" id="input-customer-email">
+            </br>
+
+            <label class="labelAlign" for="input-customer-address">Address: </label>
+            <input type="text" name="input-customer-address" id="input-customer-address">
+            </br>
+
+            <input class="btn3" type="submit">
+        </form>
+    </fieldset>
+
+{{!-- Form to search for a record in the table --}}
+<h2>Search Using an HTML Form</h2>
+<p>Search by last name using the field below. Partial last names are OK too!</p>
+<fieldset class ="fields">
+<form id="search-person-html" method='GET' action='/customers'>
+    <label class="labelAlign" for="input-customer-last-name">Search by Last Name: </label>
+    <input type="text" name="customer_last_name" id="input-customer-last-name-html-search">
+    
+    <input class ="btn2" type="submit">
+    <a href='/customers'><button>Reset</button></a>
+</form>
+</fieldset>
+
+{{!-- Form to update a record to the table  --}}
+<h2>Update A Customer Form</h2>
+<p>To update a specific customer's select their name from the drop-down menu on the left and then enter updated information</p>
+
+<fieldset class = "fields">
+<form id="update-customer-form">
+    <label class="labelAlign" for="choose_customer">Customer: </label>
+    <select name="choose_customer" id="customer" onChange='fillInUpdateForm()'>
+        <option value="test">Select a Customer</option>
+        {{#each data}}
+        <option value="{{this.customer_ID}}">{{this.customer_first_name}} {{this.customer_last_name}}</option>
+        {{/each}}
+    </select>
+    <br/>
+
+    <label class="labelAlign" for="customer_first_name">Updated First Name:</label>
+    <input required type="text" name="customer_first_name" id="customer_first_name" value={{this.customer_first_name}}>
+    <br/>
+
+    <label class="labelAlign" for="customer_last_name">Updated Last Name:</label>
+    <input required type="text" name="customer_last_name" id="customer_last_name" value={{this.customer_last_name}}>
+    <br/>
+
+    <label class="labelAlign" for="customer_email">Updated Email:</label>
+    <input required type="email" name="customer_email" id="customer_email" value={{this.customer_email}}>
+    <br/>
+
+    <label class="labelAlign" for="customer_address">Updated Address:</label>
+    <input required type="text" name="customer_address" id="customer_address" value={{this.customer_address}}>
+    <br/>
+
+    <input class="btn3" type="submit">
+</form>
+</fieldset>
+
+<script src="./js/customer.js"></script>

@@ -1,0 +1,125 @@
+<!-- products.hbs -->
+<h1 class = "center">The Potion Pharmaceutical 
+    <p class = "p"><a href="/">Index</a> | <a href="customers">Customers</a> | <a href="orders">Orders</a> 
+        | <a href="credentials">Credentials</a> | <a href="products">Products</a> | <a href="orderItems"> Order Items</a></p>
+</h1>
+<h1><strong>Products</strong></h1>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/styler.css">
+
+
+{{!-- Create a table --}}
+<table class="table" id="products-table">>
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the product number, product type, title, retail price and quanitity in stock, in order --}}
+        {{#each data}}
+        <tr data-value={{this.id}}>>
+            <td>{{this.product_number}}</td>
+            <td>{{this.product_type}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.retail_price}}</td>
+            <td>{{this.quantity_in_stock}}</td>
+            <td><button class="btnWarning" onclick="deleteProduct({{this.product_number}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Add Table --}}
+<h2>Add Products</h2>
+<p>To add a new product, please enter their information below and click 'Submit'!</p>
+<fieldset class = "fields">
+<form id="add-product">
+
+    <label class="labelAlign" for="input-product-type">Product Type: </label>
+    <input type="text" name="input-product-type" id="input-product-type">
+    </br>
+    
+    <label class="labelAlign" for="input-title">Title: </label>
+    <input type="text" name="input-title" id="input-title">
+    </br>
+
+    <label class="labelAlign" for="input-retail-price">Retail Price: </label>$</label>
+    <input type="number" step = "any" name="input-retail-price" id="input-retail-price">
+    </br>
+
+    <label class="labelAlign" for="input-quantity-in-stock">Quantity: </label>
+    <input type="number" step = "1" name="input-quantity-in-stock" id="input-quantity-in-stock">
+    </br>
+
+    <input class="btn3" type="submit">
+</form>
+</fieldset>
+
+{{!-- Search Table --}}
+<h2>Search Products</h2>
+<p>Search Products using the field below.</p>
+<fieldset class ="fields">
+<form id="search-product-html" method='GET' action='/products'>
+    <label class="labelAlign" for="input-product-number">Search by Product #: </label>
+    <select name= "product_number" id="selectedProduct0">
+        <option value="">Select a Product Number</option>
+        {{#each data}}
+        <option value="{{this.product_number}}">{{this.product_number}}</option>
+        {{/each}}
+    </select>
+    
+    <input class ="btn2" type="submit">
+    <a href='/products'><button>Reset</button></a>
+</form>
+</fieldset>
+
+{{!-- Update Table --}}
+<h2>Updating Product</h2>
+<p>To update a specific product select the product number from the drop-down menu on the left and their desired name from the label on the right</p>
+<fieldset class = "fields">
+<form id="update-order">
+
+    <label class="labelAlign" for="input-product-number">Product Number: </label>
+    <select name="input-product-number" id="selectedProduct1" onChange='fillInUpdateForm()'>
+        <option value="test">Select a Product Number</option>
+        {{#each data}}
+        <option value="{{this.product_number}}">{{this.product_number}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="product_type">Product Type: </label>
+        <input type="text" name="product_type" id="product_type">
+        </br>
+        
+        <label class="labelAlign" for="title">Title: </label>
+        <input type="text" name="title" id="title">
+        </br>
+
+        <label class="labelAlign" for="retail_price">Retail Price: </label>$</label>
+        <input type="number" step = "any" name="retail_price" id="retail_price">
+        </br>
+
+        <label class="labelAlign" for="quantity_in_stock">Quantity: </label>
+        <input type="number" step = "1" name="quantity_in_stock" id="quantity_in_stock">
+        </br>
+
+        <input class="btn3" type="submit">
+
+</form>
+</fieldset>
+
+<script src="./js/product.js"></script>

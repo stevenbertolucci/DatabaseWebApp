@@ -1,0 +1,134 @@
+<!-- orders.hbs -->
+<h1 class = "center">The Potion Pharmaceutical 
+    <p class = "p"><a href="/">Index</a> | <a href="customers">Customers</a> | <a href="orders">Orders</a> 
+        | <a href="credentials">Credentials</a> | <a href="products">Products</a> | <a href="orderItems"> Order Items</a></p>
+</h1>
+<h1><strong>Orders</strong></h1>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/styler.css">
+
+
+
+{{!-- Create a table --}}
+<table class="table" id="orders-table">>
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the order_number, customer_ID, order_date, credit_card_number and credit_card_exp_date, in order --}}
+        {{#each data}}
+        <tr data-value={{this.id}}>>
+            <td>{{this.order_number}}</td>
+            <td>{{this.customer_ID}}</td>
+            <td>{{this.order_date}}</td>
+            <td>{{this.credit_card_number}}</td>
+            <td>{{this.credit_card_exp_date}}</td>
+            <td><button class="btnWarning" onclick="deleteOrder({{this.order_number}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table  --}}
+
+<h2>Add Orders</h2>
+<p>To add a new order, please enter their information below and click 'Submit'!</p>
+<fieldset class = "fields">
+<form id="add-order">
+    <label class="labelAlign" for="input-customer-id">Customer ID: </label>
+    <select name="input-customer-id" id="customer-id">
+        <option value="">customer_ID</option>
+        {{#each customers}}
+        <option value="{{this.customer_ID}}">{{this.customer_ID}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="input-order-date">Order Date: </label>
+    <input type="date" name="input-order-date" id="input-order-date" placeholder="YYYY-MM-DD" min="1900-01-01" required/>
+    </br>
+    
+    <label class="labelAlign" for="input-credit-card-number">Credit Card Number: </label>
+    <input type="text" name="input-credit-card-number" id="input-credit-card-number">
+    </br>
+
+    <label class="labelAlign" for="input-credit-card-exp-date">Credit Card Exp. Date: </label>
+    <input type="text" name="input-credit-card-exp-date" id="input-credit-card-exp-date">
+    </br>
+
+    <input class= "btn3" type="submit">
+</form>
+</fieldset>
+
+{{!-- Search Table --}}
+<h2>Search Orders</h2>
+<p>Search Orders using the field below.</p>
+<fieldset class ="fields">
+<form id="search-order-html" method='GET' action='/orders'>
+    <label class="labelAlign" for="input-order-number">Search by Order #: </label>
+    <select name= "order_number" id="selectedOrder0">
+        <option value="">Select an Order</option>
+        {{#each data}}
+        <option value="{{this.order_number}}">{{this.order_number}}</option>
+        {{/each}}
+    </select>
+    
+    <input class ="btn3" type="submit">
+    <a href='/orders'><button>Reset</button></a>
+</form>
+</fieldset>
+
+{{!-- Update Table --}}
+<h2>Updating an Order</h2>
+<p>To update a specific customer's select their name from the drop-down menu on the left and their desired name from the label on the right</p>
+<fieldset class = "fields">
+<form id="update-order">
+    <label class="labelAlign" for="input-order-number">Order Number: </label>
+    <select name="input-order-number" id="selectedOrder1" onChange='fillInUpdateForm()'>
+        <option value="test">Select an Order</option>
+        {{#each data}}
+        <option value="{{this.order_number}}">{{this.order_number}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="customer_ID">customer_ID: </label>
+    <select name="customer_ID" id="selectedOrder2">
+        <option value="test">Select a Customer Number</option>
+        {{#each customers}}
+        <option value="{{this.customer_ID}}">{{this.customer_ID}}</option>
+        {{/each}}
+    </select>
+    </br>
+
+    <label class="labelAlign" for="order_date">Order Date: </label>
+    <input required type="date" name="order_date" id="order_date" value={{this.order_date}}>
+    </br>
+    
+    <label class="labelAlign" for="credit_card_number">Credit Card Number: </label>
+    <input required type="text" name="credit_card_number" id="credit_card_number" value={{this.credit_card_number}}>
+    </br>
+
+    <label class="labelAlign" for="credit_card_exp_date">Credit Card Exp. Date: </label>
+    <input required type="text" name="credit_card_exp_date" id="credit_card_exp_date" value={{this.credit_card_exp_date}}>
+    </br>
+
+    <input class ="btn4" type="submit">
+</form>
+</fieldset>
+
+<script src="./js/order.js"></script>

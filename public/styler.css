@@ -1,0 +1,118 @@
+h1 {
+    color: black
+}
+
+.body {
+    background-image: url("doctors-changing-expectations-of-pharma-are-here-to-stay-rectangle.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.p {
+    font-size: medium;
+}
+
+.name {
+    font-size: small;
+}
+
+.center {
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    border-style: solid;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fields {
+    background-color: rgb(211, 219, 219);
+    width: 35%;
+}
+
+.btn {
+    background-color: powderblue;
+    margin-left: 1cm;
+}
+
+.btn2 {
+    background-color: powderblue;
+    margin-left: 0.5cm;
+}
+
+.btn3 {
+    background-color: powderblue;
+    margin-left: 5cm;
+    margin-top: .5cm;
+}
+
+.btn4{
+    background-color: powderblue;
+}
+
+.btnWarning {
+    background-color: rgb(249, 71, 71);
+}
+
+.btnCancel {
+    background-color: rgb(197, 197, 197);
+}
+
+.labelAlign {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    padding: 7.5px;
+}
+
+.labelAlign2 {
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+}
+
+.labelAlign3 {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(188, 188, 188);
+}
+
+tr:nth-child(odd) {
+    background-color: rgb(233, 233, 233);
+}
+
+ul.no-bullets {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.table, th, td {
+    border: 2px solid;
+    align-content: center;
+    padding: 6px;
+    width:fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table2 {
+    border: 2px solid;
+    align-content: center;
+    padding: 6px;
+    width:fit-content;
+}
+
+.a:link {
+    color: greenyellow;
+}
+
+.a:visited {
+    color: forestgreen;
+}
